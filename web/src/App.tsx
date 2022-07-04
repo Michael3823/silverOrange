@@ -21,7 +21,6 @@ const App = (props: any) => {
     history('/recent', { state: { website } });
   };
   const languages = Array.from(new Set(data?.repos.map((x) => x.language)));
-  console.log(languages);
   return (
     <div className="App">
       <h1>Welcome!</h1>
