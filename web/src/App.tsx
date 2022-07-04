@@ -20,14 +20,20 @@ const App = (props: any) => {
   const goNextPage = (website: string) => {
     history('/recent', { state: { website } });
   };
+  const languages = Array.from(new Set(data?.repos.map((x) => x.language)));
+  console.log(languages);
   return (
     <div className="App">
       <h1>Welcome!</h1>
       <h2>set filter</h2>
       <button onClick={() => setFilter('')}>Show All</button>
-      <button onClick={() => setFilter('Typescript')}>Typescript</button>
-      <button onClick={() => setFilter('PHP')}>PHP</button>
-
+      {languages.map((x) => {
+        return (
+          <>
+            <button onClick={() => setFilter(x)}>{x}</button>
+          </>
+        );
+      })}
       {data?.repos
         // eslint-disable-next-line array-callback-return
         .filter((repo) => {
