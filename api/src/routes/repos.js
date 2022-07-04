@@ -16,7 +16,6 @@ repos.get('/', async (req, res) => {
   axios
     .get(url, options)
     .then((result) => {
-      console.log(result);
       res.send({
         //filters to check if for == false
         // eslint-disable-next-line array-callback-return

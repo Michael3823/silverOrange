@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Repo } from './Repo';
 import './App.css';
+import { useNavigate } from 'react-router-dom';
 
 interface IProps {
   repos: Repo[];
 }
 
-export function App() {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const App = (props: any) => {
   const [data, setData] = useState<IProps>();
   const [filter, setFilter] = useState('');
   useEffect(() => {
@@ -14,6 +16,10 @@ export function App() {
       .then((response) => response.json())
       .then((datas) => setData(datas));
   }, []);
+  const history = useNavigate();
+  const goNextPage = (website: string) => {
+    history('/recent', { state: { website } });
+  };
   return (
     <div className="App">
       <h1>Welcome!</h1>
@@ -42,9 +48,18 @@ export function App() {
           return (
             <>
               <div>
-                <h3 key={i}>
-                  <a href={x.url}> {x.name}</a>
-                </h3>
+                <h3 key={i}>{x.name}</h3>
+                <button
+                  onClick={() =>
+                    goNextPage(
+                      'https://api.github.com/repos/silverorange/' +
+                        x.name +
+                        '/commits'
+                    )
+                  }
+                >
+                  Check Most recent commit
+                </button>
                 <p>
                   {x.description
                     ? 'Description: ' + x.description
@@ -59,4 +74,6 @@ export function App() {
         })}
     </div>
   );
-}
+};
+
+export default App;
